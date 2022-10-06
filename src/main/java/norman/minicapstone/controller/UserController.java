@@ -5,10 +5,7 @@ import lombok.RequiredArgsConstructor;
 import norman.minicapstone.dto.UserDTO;
 import norman.minicapstone.model.UserRequest;
 import norman.minicapstone.service.UserService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
@@ -18,9 +15,19 @@ public class UserController {
 
     private final UserService userService;
 
-    @PostMapping("/signup")
+    @PutMapping("/signup")
     public UserDTO registerUser(@RequestBody @NonNull UserRequest userRequest) {
         return userService.saveUser(userRequest);
+    }
+
+    @DeleteMapping("/{email}")
+    public String deletUser(@PathVariable String email){
+        return userService.deleteUser(email);
+    }
+
+    @PostMapping("/update/{oldEmail}")
+    public UserDTO updateUser(@PathVariable String oldEmail, @RequestBody UserRequest userRequest) {
+        return userService.updateUser(oldEmail, userRequest);
     }
 
 }
