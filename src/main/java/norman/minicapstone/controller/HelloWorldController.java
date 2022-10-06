@@ -19,6 +19,6 @@ public class HelloWorldController {
 
     @PutMapping("/custom/{firstName}/{lastName}")
     public String getHelloName(@PathVariable String firstName, @PathVariable String lastName) {
-        return "Hello ".concat(firstName).concat(" ".concat(lastName));
+        return "OLA! ".concat(firstName).concat(" ".concat(lastName));
     }
 }
