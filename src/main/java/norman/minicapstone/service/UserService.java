@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import norman.minicapstone.dto.UserDTO;
 import norman.minicapstone.entity.UserEntity;
+import norman.minicapstone.exception.UserAlreadyExist;
 import norman.minicapstone.model.UserRequest;
 import norman.minicapstone.repository.UserRepository;
 import norman.minicapstone.util.DateTimeUtil;
@@ -27,7 +28,7 @@ public class UserService {
 
         // Check if email is existing
         if(userRepository.findByEmail(newUser.getEmail()) !=null) {
-            throw new IllegalStateException("Email already in used");
+            throw new UserAlreadyExist("Email already in used");
         }
 
         // Initialize user
@@ -69,7 +70,7 @@ public class UserService {
         UserEntity user = userRepository.findByEmail(oldEmail);
 
         // Check if user is existing
-        if (user == null) throw new IllegalStateException("User doesn't exist");
+        if (user == null) throw new UserAlreadyExist("User doesn't exist");
 
         // update user
         UserEntity updatedUser = UserEntity
@@ -86,7 +87,7 @@ public class UserService {
         // save updated user
         // Check if new email exist
         if(userRepository.findByEmail(updatedUser.getEmail()) != null) {
-            throw new IllegalStateException("Email already in used");
+            throw new UserAlreadyExist("Email already in used");
         }
         userRepository.save(updatedUser);
 
