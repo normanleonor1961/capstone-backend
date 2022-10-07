@@ -30,4 +30,8 @@ public class UserController {
         return userService.updateUser(oldEmail, userRequest);
     }
 
+    @PostMapping("/login")
+    public UserDTO loginUser(@RequestBody @NonNull UserRequest userRequest) {
+        return userService.loginUser(userRequest);
+    }
 }
