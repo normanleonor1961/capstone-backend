@@ -1,16 +1,15 @@
 package norman.minicapstone.controller;
 
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import norman.minicapstone.dto.UserDTO;
 import norman.minicapstone.model.UserRequest;
 import norman.minicapstone.service.UserService;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor
-
 public class UserController {
 
     private final UserService userService;
@@ -21,7 +20,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{email}")
-    public String deletUser(@PathVariable String email){
+    public String deleteUser(@PathVariable String email) {
         return userService.deleteUser(email);
     }
 

@@ -1,17 +1,16 @@
 package norman.minicapstone.service;
 
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import norman.minicapstone.dto.UserDTO;
 import norman.minicapstone.entity.UserEntity;
 import norman.minicapstone.exception.UserAlreadyExist;
 import norman.minicapstone.model.UserRequest;
 import norman.minicapstone.repository.UserRepository;
 import norman.minicapstone.util.DateTimeUtil;
-import org.apache.catalina.User;
-import org.modelmapper.ModelMapper;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.modelmapper.ModelMapper;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -28,7 +27,7 @@ public class UserService {
     public UserDTO saveUser(@NonNull UserRequest newUser) {
 
         // Check if email is existing
-        if(userRepository.findByEmail(newUser.getEmail()) !=null) {
+        if(userRepository.findByEmail(newUser.getEmail()) != null) {
             throw new UserAlreadyExist("Email already in used");
         }
 
@@ -48,7 +47,6 @@ public class UserService {
         userRepository.save(user);
 
         return modelMapper.map(user, UserDTO.class);
-
     }
 
     public String deleteUser(String email) {
@@ -71,7 +69,7 @@ public class UserService {
         UserEntity user = userRepository.findByEmail(oldEmail);
 
         // Check if user is existing
-        if (user == null) throw new UserAlreadyExist("User doesn't exist");
+        if(user == null) throw new UserAlreadyExist("User doesn't exist");
 
         // update user
         UserEntity updatedUser = UserEntity
@@ -85,15 +83,15 @@ public class UserService {
                 .modifiedDate(dateTimeUtil.currentDate())
                 .build();
 
-        // save updated user
         // Check if new email exist
         if(userRepository.findByEmail(updatedUser.getEmail()) != null) {
             throw new UserAlreadyExist("Email already in used");
         }
+
+        // save updated user
         userRepository.save(updatedUser);
 
         return modelMapper.map(updatedUser, UserDTO.class);
-
     }
 
     public UserDTO loginUser(@NonNull UserRequest activeUser) {

@@ -1,7 +1,7 @@
 package norman.minicapstone.entity;
 
-import lombok.*;
 import norman.minicapstone.config.SchemaConfiguration;
+import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.Entity;

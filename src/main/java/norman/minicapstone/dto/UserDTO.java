@@ -13,5 +13,4 @@ public class UserDTO {
     private int successOrders;
     private ZonedDateTime createdDate;
     private ZonedDateTime modifiedDate;
-
 }
