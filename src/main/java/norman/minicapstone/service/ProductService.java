@@ -2,6 +2,8 @@ package norman.minicapstone.service;
 
 import norman.minicapstone.dto.ProductDTO;
 import norman.minicapstone.entity.ProductEntity;
+import norman.minicapstone.entity.UserEntity;
+import norman.minicapstone.exception.UserAlreadyExist;
 import norman.minicapstone.model.ProductRequest;
 import norman.minicapstone.repository.ProductRepository;
 import norman.minicapstone.util.DateTimeUtil;
@@ -42,6 +44,7 @@ public class ProductService {
 
     public List<ProductDTO> addProduct(ProductRequest newProduct) {
 
+
         // Save new product to database
         productRepository.save(ProductEntity
                 .builder()
@@ -56,6 +59,20 @@ public class ProductService {
                 .createdDate(dateTimeUtil.currentDate())
                 .modifiedDate(dateTimeUtil.currentDate())
                 .build());
+
+        return getAllProducts();
+    }
+
+    public List<ProductDTO> deleteProduct(UUID productId) {
+
+        // Get user
+        ProductEntity product = productRepository.findByProductId(productId);
+
+        // Check if user exist
+        if(product == null) throw new UserAlreadyExist("Product doesn't exist");
+
+        // Delete Product
+        productRepository.deleteByProductId(productId);
 
         return getAllProducts();
     }
